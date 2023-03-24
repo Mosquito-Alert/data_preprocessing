@@ -209,7 +209,7 @@ filenames.append("/tmp/hidden_reports2023.json")
 
 
 # FILE WRITING
-
+'''
 
 cfa_data = get_cfa_reports()
 file = "/tmp/cfa.json"
@@ -262,6 +262,7 @@ text_file = open("/home/webuser/webapps/tigaserver/static/coverage_month_data.js
 text_file.write(accumulated_results)
 text_file.close()
 
+'''
 # END FILE WRITING
 
 
@@ -339,6 +340,7 @@ class_translation_table = {
     'albopictus-cretinus':'albopictus_cretinus',
     'not-sure': 'not_sure',
     'unclassified': 'unclassified',
+    'off-topic': 'unclassified',
     'culex-sp': 'culex',
     'conflict': 'conflict',
     'complex': 'complex'
