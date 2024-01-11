@@ -196,6 +196,7 @@ filenames.append("/home/webuser/webapps/tigaserver/static/all_reports2020.json")
 filenames.append("/home/webuser/webapps/tigaserver/static/all_reports2021.json")
 filenames.append("/home/webuser/webapps/tigaserver/static/all_reports2022.json")
 filenames.append("/home/webuser/webapps/tigaserver/static/all_reports2023.json")
+filenames.append("/home/webuser/webapps/tigaserver/static/all_reports2024.json")
 filenames.append("/tmp/hidden_reports2014.json")
 filenames.append("/tmp/hidden_reports2015.json")
 filenames.append("/tmp/hidden_reports2016.json")
@@ -206,10 +207,11 @@ filenames.append("/tmp/hidden_reports2020.json")
 filenames.append("/tmp/hidden_reports2021.json")
 filenames.append("/tmp/hidden_reports2022.json")
 filenames.append("/tmp/hidden_reports2023.json")
+filenames.append("/tmp/hidden_reports2024.json")
 
 
 # FILE WRITING
-'''
+
 
 cfa_data = get_cfa_reports()
 file = "/tmp/cfa.json"
@@ -262,7 +264,7 @@ text_file = open("/home/webuser/webapps/tigaserver/static/coverage_month_data.js
 text_file.write(accumulated_results)
 text_file.close()
 
-'''
+
 # END FILE WRITING
 
 
