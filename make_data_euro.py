@@ -845,6 +845,7 @@ WITH DATA;
 """)
 
 cursor.execute("""grant select on map_aux_reports to epidata;""")
+cursor.execute("""grant select on map_aux_reports to culex;""")
 
 conn.commit()
 
