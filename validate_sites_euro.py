@@ -57,20 +57,21 @@ def auto_validate(report,dryRun,auto_validation_user):
 
 
 def get_reports_imbornal():
-    reports_imbornal_old = ReportResponse.objects.filter(
-        Q(question='Is this a storm drain or sewer?', answer='Yes') | Q(question=u'\xc9s un embornal o claveguera?',
-                                                                        answer=u'S\xed') | Q(
-            question=u'\xbfEs un imbornal o alcantarilla?', answer=u'S\xed') | Q(question='Selecciona lloc de cria',
-                                                                                 answer='Embornals') | Q(
-            question='Selecciona lloc de cria', answer='Embornal o similar') | Q(question='Tipo de lugar de cría',
-                                                                                 answer='Sumidero o imbornal') | Q(
-            question='Tipo de lugar de cría', answer='Sumideros') | Q(question='Type of breeding site',
-                                                                      answer='Storm drain') | Q(
-            question='Type of breeding site', answer='Storm drain or similar receptacle')).values('report').distinct()
-
-    reports_imbornal_new = ReportResponse.objects.filter(question_id=12).filter(answer_id=121).values('report').distinct()
-
-    return reports_imbornal_old | reports_imbornal_new
+    # reports_imbornal_old = ReportResponse.objects.filter(
+    #     Q(question='Is this a storm drain or sewer?', answer='Yes') | Q(question=u'\xc9s un embornal o claveguera?',
+    #                                                                     answer=u'S\xed') | Q(
+    #         question=u'\xbfEs un imbornal o alcantarilla?', answer=u'S\xed') | Q(question='Selecciona lloc de cria',
+    #                                                                              answer='Embornals') | Q(
+    #         question='Selecciona lloc de cria', answer='Embornal o similar') | Q(question='Tipo de lugar de cría',
+    #                                                                              answer='Sumidero o imbornal') | Q(
+    #         question='Tipo de lugar de cría', answer='Sumideros') | Q(question='Type of breeding site',
+    #                                                                   answer='Storm drain') | Q(
+    #         question='Type of breeding site', answer='Storm drain or similar receptacle')).values('report').distinct()
+    #
+    # reports_imbornal_new = ReportResponse.objects.filter(question_id=12).filter(answer_id=121).values('report').distinct()
+    #
+    # return reports_imbornal_old | reports_imbornal_new
+    return Report.objects.filter(breeding_site_type=Report.BREEDING_SITE_TYPE_STORM_DRAIN, type=Report.TYPE_SITE)
 
 # validation user is super_movelab
 args = sys.argv
