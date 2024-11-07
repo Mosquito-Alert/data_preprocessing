@@ -32,13 +32,13 @@ def load_fast_track_ids():
         return []
     return content
 
-def filter_reports(reports, sort=True):
-    if sort:
-        reports_filtered = sorted(filter(lambda x: not x.deleted and x.latest_version, reports),
-                                  key=attrgetter('n_annotations'), reverse=True)
-    else:
-        reports_filtered = filter(lambda x: not x.deleted and x.latest_version, reports)
-    return reports_filtered
+# def filter_reports(reports, sort=True):
+#     if sort:
+#         reports_filtered = sorted(filter(lambda x: not x.deleted and x.latest_version, reports),
+#                                   key=attrgetter('n_annotations'), reverse=True)
+#     else:
+#         reports_filtered = filter(lambda x: not x.deleted and x.latest_version, reports)
+#     return reports_filtered
 
 def auto_validate(report,dryRun,auto_validation_user):
     if dryRun:
@@ -97,7 +97,7 @@ new_reports_unfiltered_sites_other = Report.objects.exclude(type='adult').exclud
 
 new_reports_unfiltered_sites = new_reports_unfiltered_sites_embornal | new_reports_unfiltered_sites_other
 
-new_reports_unfiltered_sites = list(filter_reports(new_reports_unfiltered_sites, False))
+# new_reports_unfiltered_sites = list(filter_reports(new_reports_unfiltered_sites, False))
 
 fast_track = load_fast_track_ids()
 
