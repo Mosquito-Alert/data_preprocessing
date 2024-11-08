@@ -32,14 +32,6 @@ def load_fast_track_ids():
         return []
     return content
 
-# def filter_reports(reports, sort=True):
-#     if sort:
-#         reports_filtered = sorted(filter(lambda x: not x.deleted and x.latest_version, reports),
-#                                   key=attrgetter('n_annotations'), reverse=True)
-#     else:
-#         reports_filtered = filter(lambda x: not x.deleted and x.latest_version, reports)
-#     return reports_filtered
-
 def auto_validate(report,dryRun,auto_validation_user):
     if dryRun:
         logging.info(
@@ -55,24 +47,6 @@ def auto_validate(report,dryRun,auto_validation_user):
         new_annotation.revise = True
         new_annotation.save()
 
-
-def get_reports_imbornal():
-    # reports_imbornal_old = ReportResponse.objects.filter(
-    #     Q(question='Is this a storm drain or sewer?', answer='Yes') | Q(question=u'\xc9s un embornal o claveguera?',
-    #                                                                     answer=u'S\xed') | Q(
-    #         question=u'\xbfEs un imbornal o alcantarilla?', answer=u'S\xed') | Q(question='Selecciona lloc de cria',
-    #                                                                              answer='Embornals') | Q(
-    #         question='Selecciona lloc de cria', answer='Embornal o similar') | Q(question='Tipo de lugar de cría',
-    #                                                                              answer='Sumidero o imbornal') | Q(
-    #         question='Tipo de lugar de cría', answer='Sumideros') | Q(question='Type of breeding site',
-    #                                                                   answer='Storm drain') | Q(
-    #         question='Type of breeding site', answer='Storm drain or similar receptacle')).values('report').distinct()
-    #
-    # reports_imbornal_new = ReportResponse.objects.filter(question_id=12).filter(answer_id=121).values('report').distinct()
-    #
-    # return reports_imbornal_old | reports_imbornal_new
-    return Report.objects.filter(breeding_site_type=Report.BREEDING_SITE_TYPE_STORM_DRAIN, type=Report.TYPE_SITE)
-
 # validation user is super_movelab
 args = sys.argv
 dryRun = False
@@ -85,7 +59,10 @@ logname = "/home/webuser/webapps/data_preprocessing/auto-validation-" + now.strf
 logging.basicConfig(filename=logname, level=logging.INFO)
 
 
-reports_imbornal = get_reports_imbornal()
+reports_imbornal = Report.objects.filter(breeding_site_type=Report.BREEDING_SITE_TYPE_STORM_DRAIN, type=Report.TYPE_SITE)
+
+new_reports_unfiltered_sites_embornal = reports_imbornal.exclude(note__icontains='#345').exclude(photos=None).exclude(hide=True).annotate(
+    n_annotations=Count('expert_report_annotations')).filter(n_annotations=0).order_by('-server_upload_time')
 
 new_reports_unfiltered_sites_embornal = Report.objects.exclude(type='adult').filter(
     version_UUID__in=reports_imbornal).exclude(note__icontains='#345').exclude(photos=None).exclude(hide=True).annotate(
